@@ -13,7 +13,6 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'; // Import Link
 import logo from '../../assets/לוגו (2).png';
 import { Container } from '@mui/material';
 import { Role } from '../../enums/role';
-import axios from 'axios';
 
 const pages = [
   { name: 'בית', path: '/' },
@@ -28,8 +27,9 @@ const settings = [
   'מפיק',
 ];
 
-function ResponsiveAppBar({userName}) {
+function ResponsiveAppBar() {
 
+  const userName = localStorage.getItem("userName")
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
@@ -132,8 +132,8 @@ function ResponsiveAppBar({userName}) {
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="h6">
+          <Box sx={{ flexGrow: 0.05 }}>
+          <Typography varint="p">
             {userName == "" ? "":`🤗שלום ${userName}`} {/* מציג את השם אם יש, אחרת "אורח" */}
           </Typography>
         </Box>

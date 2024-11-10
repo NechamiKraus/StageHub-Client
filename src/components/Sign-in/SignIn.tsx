@@ -19,7 +19,7 @@ const FormContainer = styled(Container)({
     width: '100%',
     maxWidth: '400px',
   });
-const SignIn: React.FC  = ({onNameUpdate}) => {
+const SignIn: React.FC  = () => {
     
     const { role } = useParams();
 
@@ -34,7 +34,7 @@ const SignIn: React.FC  = ({onNameUpdate}) => {
         console.log(res.data);
         localStorage.setItem("token",res.data.token) 
         localStorage.setItem("id",res.data.id) 
-        const result = await axios.get(`http://localhost:3001/details/${res.data.id}`,{
+        const result = await axios.get(`http://localhost:3001/${Role[role]}/details/${res.data.id}`,{
             headers: {
                 'auth-token': res.data.token 
               },  
@@ -42,7 +42,7 @@ const SignIn: React.FC  = ({onNameUpdate}) => {
                 id: res.data.id 
               }
             });
-        onNameUpdate(result.data.name);
+        localStorage.setItem("userName", result.data.name)
       } catch (error) {
         console.error('Error fetching data:', error); // הדפסת שגיאה אם יש
       }
