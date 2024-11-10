@@ -19,7 +19,7 @@ const FormContainer = styled(Container)({
     width: '100%',
     maxWidth: '400px',
   });
-const SignIn: React.FC  = () => {
+const SignIn: React.FC  = ({onLogin}) => {
     
     const { role } = useParams();
 
@@ -28,7 +28,6 @@ const SignIn: React.FC  = () => {
 
   const handleLogin = async(event: React.FormEvent) => {
     event.preventDefault();
-    // Handle login logic here
     try {
         const res = await axios.post(`http://localhost:3001/login/${Role[role]}`,{email,password});
         console.log(res.data);
@@ -42,7 +41,8 @@ const SignIn: React.FC  = () => {
                 id: res.data.id 
               }
             });
-        localStorage.setItem("userName", result.data.name)
+        // localStorage.setItem("userName", result.data.name)
+        onLogin(result.data.name)
       } catch (error) {
         console.error('Error fetching data:', error); // הדפסת שגיאה אם יש
       }

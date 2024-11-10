@@ -13,6 +13,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'; // Import Link
 import logo from '../../assets/לוגו (2).png';
 import { Container } from '@mui/material';
 import { Role } from '../../enums/role';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const pages = [
   { name: 'בית', path: '/' },
@@ -27,9 +28,8 @@ const settings = [
   'מפיק',
 ];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({userName,onLogout}) {
 
-  const userName = localStorage.getItem("userName")
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
@@ -134,8 +134,10 @@ function ResponsiveAppBar() {
           </Box>
           <Box sx={{ flexGrow: 0.05 }}>
           <Typography varint="p">
-            {userName == "" ? "":`🤗שלום ${userName}`} {/* מציג את השם אם יש, אחרת "אורח" */}
+            {userName ? `🤗שלום ${userName}` : "שלום אורח"} {/* מציג את השם אם יש, אחרת "אורח" */}
           </Typography>
+
+          <Button onClick={onLogout} variant="text">ליציאה <LogoutIcon/></Button>
         </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="כניסה">
