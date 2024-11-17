@@ -28,7 +28,7 @@ const settings = [
   'מפיק',
 ];
 
-function ResponsiveAppBar({userName,onLogout}) {
+function ResponsiveAppBar({ userName, onLogout }) {
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -50,7 +50,7 @@ function ResponsiveAppBar({userName,onLogout}) {
   };
 
   const navigateToSignin = (setting: string) => {
-    let role:any;
+    let role: any;
     switch (setting) {
       case "מאמן":
         role = Role.Coach;
@@ -69,10 +69,10 @@ function ResponsiveAppBar({userName,onLogout}) {
         break;
     }
     setAnchorElUser(null) // סוגר את חלונית הכניסה
-    navigate(`/signin/${role}`);
-    
+    navigate(`/signin/${Role[role]}`);
+
   };
-  
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl" sx={{
@@ -118,7 +118,7 @@ function ResponsiveAppBar({userName,onLogout}) {
                 </MenuItem>
               ))} */}
             </Menu>
-          </Box>    
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -132,45 +132,49 @@ function ResponsiveAppBar({userName,onLogout}) {
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0.05 }}>
-          <Typography varint="p">
-            {userName ? `🤗שלום ${userName}` : "שלום אורח"} {/* מציג את השם אם יש, אחרת "אורח" */}
-          </Typography>
+      <Box sx={{ flexGrow: 0.05 }}>
+        <Typography variant="p">
+          {userName ? `🤗 שלום ${userName}` : "שלום אורח"} {/* מציג את השם אם יש, אחרת "אורח" */}
+        </Typography>
 
-          <Button onClick={onLogout} variant="text">ליציאה <LogoutIcon/></Button>
-        </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="כניסה">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => navigateToSignin(setting)}>
-                  <Typography sx={{ textAlign: 'center' }}>{`כניסה כ${setting}`}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+        {userName && ( // מציג את כפתור היציאה רק אם userName קיים
+          <Button onClick={onLogout} variant="text">
+            ליציאה <LogoutIcon />
+          </Button>
+        )}
+      </Box>
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="כניסה">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt="Remy Sharp" src="" />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {settings.map((setting) => (
+            <MenuItem key={setting} onClick={() => navigateToSignin(setting)}>
+              <Typography sx={{ textAlign: 'center' }}>{`כניסה כ${setting}`}</Typography>
+            </MenuItem>
+          ))}
+        </Menu>
+      </Box>
+    </Toolbar>
+      </Container >
+    </AppBar >
   );
 }
 
