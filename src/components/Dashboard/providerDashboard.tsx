@@ -1,6 +1,7 @@
 const ProviderDashboard = () => {
     
     return<>
+    provider
      </>
   };
 

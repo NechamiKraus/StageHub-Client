@@ -34,6 +34,7 @@ function App() {
     localStorage.removeItem("userName");
     localStorage.removeItem("token");
     localStorage.removeItem("id");
+    localStorage.removeItem("userRole");
     setUserName('')
     navigate("/")
   }
@@ -51,7 +52,7 @@ function App() {
           <Route path="/director" element={<DirectorDashboard />} />
           <Route path="/provider" element={<ProviderDashboard />} />
           <Route path="/coach" element={<CoachDashboard />} />
-          <Route path="/actor" element={<ActorDashboard />} />
+          <Route path="/actor" element={<ActorDashboard actorId={"66789a238501e75be77823d8"} />} />
         </Route>
         <Route path="*" element={<Home />} />
 

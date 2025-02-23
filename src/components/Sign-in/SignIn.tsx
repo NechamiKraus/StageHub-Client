@@ -22,9 +22,9 @@ const FormContainer = styled(Container)({
 const SignIn: React.FC  = ({onLogin}) => {
   
   const navigate = useNavigate();
-    const { role } = useParams();
+  const { role } = useParams();
 
-    const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   const handleLogin = async(event: React.FormEvent) => {
