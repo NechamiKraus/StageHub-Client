@@ -12,9 +12,17 @@ import CoachDashboard from './components/Dashboard/CoachDashboard';
 import ProviderDashboard from './components/Dashboard/providerDashboard';
 import DirectorDashboard from './components/Dashboard/DirectorDashboard';
 import PrivateRoute from './components/Security/PrivateRoute';
-
+import Diary from './components/Diary/Diary';
 
 function App() {
+
+  const userRole = localStorage.getItem('userRole');
+
+const pages = [
+  { name: 'בית', path: '/' },
+  { name: 'אודות', path: '/about' }
+];
+
   const navigate = useNavigate();
 
   const [userName , setUserName] = useState('');
@@ -29,6 +37,7 @@ function App() {
     localStorage.setItem("userName",name);
     localStorage.setItem("userRole",role);
     setUserName(name);
+    navigate(`/${userRole}/dairy`)
   }
   const hundleLogout = () => {
     localStorage.removeItem("userName");
@@ -40,7 +49,7 @@ function App() {
   }
   return (
     <>
-      <NavBar userName={userName} onLogout = {hundleLogout}/>
+      <NavBar userName={userName} onLogout = {hundleLogout} pages ={pages}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin/:role" element={<SignIn onLogin={hundleLogin} />} />
@@ -50,9 +59,12 @@ function App() {
         <Route element={<PrivateRoute userName={userName} />}>
           <Route path="/manager" element={<ManagerDashboard />} />
           <Route path="/director" element={<DirectorDashboard />} />
+          <Route path="/director/dairy" element={<Diary/>} />
           <Route path="/provider" element={<ProviderDashboard />} />
           <Route path="/coach" element={<CoachDashboard />} />
-          <Route path="/actor" element={<ActorDashboard actorId={"66789a238501e75be77823d8"} />} />
+          <Route path="/coach/dairy" element={<Diary/>} />
+          <Route path="/actor" element={<ActorDashboard />} />
+          <Route path="/actor/dairy" element={<Diary />} />
         </Route>
         <Route path="*" element={<Home />} />
 

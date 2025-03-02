@@ -15,20 +15,19 @@ import { Container } from '@mui/material';
 import { Role } from '../../enums/role';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-const pages = [
-  { name: 'בית', path: '/' },
-  { name: 'אודות', path: '/about' }
-];
-
-const settings = [
+const loginOptions = [
   'שחקן',
   'מאמן',
   'ספק',
   'מנהל',
   'מפיק',
 ];
+const userMenu = [
+  'לאיזור האישי',
+  'ליציאה',
+]
 
-function ResponsiveAppBar({ userName, onLogout }) {
+function ResponsiveAppBar({ userName, onLogout, pages }) {
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -49,9 +48,9 @@ function ResponsiveAppBar({ userName, onLogout }) {
     setAnchorElUser(null);
   };
 
-  const navigateToSignin = (setting: string) => {
+  const navigateToSignin = (loginOption: string) => {
     let role: any;
-    switch (setting) {
+    switch (loginOption) {
       case "מאמן":
         role = Role.Coach;
         break;
@@ -70,6 +69,15 @@ function ResponsiveAppBar({ userName, onLogout }) {
     }
     setAnchorElUser(null) // סוגר את חלונית הכניסה
     navigate(`/signin/${Role[role]}`);
+
+  };
+  const navigateToPersonalArea = (userMenuOpt: string) => {
+
+    console.log(userMenuOpt);
+    if (userMenuOpt == 'ליציאה')
+      onLogout()
+    else
+    navigate(`${localStorage.getItem("userRole")}`)
 
   };
 
@@ -132,47 +140,49 @@ function ResponsiveAppBar({ userName, onLogout }) {
               </Button>
             ))}
           </Box>
-      <Box sx={{ flexGrow: 0.05 }}>
-        <Typography variant="p">
-          {userName ? `🤗 שלום ${userName}` : "שלום אורח"} {/* מציג את השם אם יש, אחרת "אורח" */}
-        </Typography>
-
-        {userName && ( // מציג את כפתור היציאה רק אם userName קיים
-          <Button onClick={onLogout} variant="text">
-            ליציאה <LogoutIcon />
-          </Button>
-        )}
-      </Box>
-      <Box sx={{ flexGrow: 0 }}>
-        <Tooltip title="כניסה">
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="" />
-          </IconButton>
-        </Tooltip>
-        <Menu
-          sx={{ mt: '45px' }}
-          id="menu-appbar"
-          anchorEl={anchorElUser}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(anchorElUser)}
-          onClose={handleCloseUserMenu}
-        >
-          {settings.map((setting) => (
-            <MenuItem key={setting} onClick={() => navigateToSignin(setting)}>
-              <Typography sx={{ textAlign: 'center' }}>{`כניסה כ${setting}`}</Typography>
-            </MenuItem>
-          ))}
-        </Menu>
-      </Box>
-    </Toolbar>
+          <Box sx={{ flexGrow: 0.05 }}>
+            <Typography variant="p">
+              {userName ? `🤗 שלום ${userName}` : "שלום אורח"} {/* מציג את השם אם יש, אחרת "אורח" */}
+            </Typography>
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="כניסה">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {localStorage.getItem("id") ? (
+                userMenu.map((userMenuOpt) => (
+                  <MenuItem key={userMenuOpt} onClick={() => navigateToPersonalArea(userMenuOpt)}>
+                    <Typography sx={{ textAlign: 'center' }}>{userMenuOpt}</Typography>
+                  </MenuItem>
+                ))
+              ) : (
+                loginOptions.map((loginOption) => (
+                  <MenuItem key={loginOption} onClick={() => navigateToSignin(loginOption)}>
+                    <Typography sx={{ textAlign: 'center' }}>{`כניסה כ${loginOption}`}</Typography>
+                  </MenuItem>
+                ))
+              )}
+            </Menu>
+          </Box>
+        </Toolbar>
       </Container >
     </AppBar >
   );
