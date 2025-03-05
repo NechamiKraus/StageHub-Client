@@ -6,13 +6,8 @@ import NavBar from './components/NavBar/NavBar'
 import SignUp from './components/Sign-up/SignUp';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import ManagerDashboard from './components/Dashboard/ManagerDashboard';
-import ActorDashboard from './components/Dashboard/ActorDashboard';
-import CoachDashboard from './components/Dashboard/CoachDashboard';
-import ProviderDashboard from './components/Dashboard/providerDashboard';
-import DirectorDashboard from './components/Dashboard/DirectorDashboard';
 import PrivateRoute from './components/Security/PrivateRoute';
-import Diary from './components/Diary/Diary';
+import UserDashboard from './components/Dashboard/UserDashboard';
 
 function App() {
 
@@ -44,9 +39,13 @@ const pages = [
     localStorage.removeItem("token");
     localStorage.removeItem("id");
     localStorage.removeItem("userRole");
+    localStorage.removeItem("userDetails");
     setUserName('')
     navigate("/")
   }
+
+  const details = localStorage.getItem('userDetails') ? JSON.parse(localStorage.getItem('userDetails')!) : null;
+
   return (
     <>
       <NavBar userName={userName} onLogout = {hundleLogout} pages ={pages}/>
@@ -57,14 +56,7 @@ const pages = [
         {/* <Route path="/about" element={<About />} /> */}
         
         <Route element={<PrivateRoute userName={userName} />}>
-          <Route path="/manager" element={<ManagerDashboard />} />
-          <Route path="/director" element={<DirectorDashboard />} />
-          <Route path="/director/dairy" element={<Diary/>} />
-          <Route path="/provider" element={<ProviderDashboard />} />
-          <Route path="/coach" element={<CoachDashboard />} />
-          <Route path="/coach/dairy" element={<Diary/>} />
-          <Route path="/actor" element={<ActorDashboard />} />
-          <Route path="/actor/dairy" element={<Diary />} />
+          <Route path= {`${localStorage.getItem("userRole")}`} element={<UserDashboard details= {details}/>} />
         </Route>
         <Route path="*" element={<Home />} />
 

@@ -37,11 +37,9 @@ const SignIn: React.FC  = ({onLogin}) => {
         const result = await axios.get(`http://localhost:3001/${role}/details/${res.data.id}`,{
             headers: {
                 'auth-token': res.data.token 
-              },  
-              params: {
-                id: res.data.id 
               }
             });
+            localStorage.setItem("userDetails", JSON.stringify(result.data))
         onLogin(result.data.name , role);
         navigate(`/${role}`);
 

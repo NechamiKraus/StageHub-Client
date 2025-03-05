@@ -8,4 +8,5 @@ export interface Actor {
     phone: String;
     email: String;
     password: String;
+
 }
