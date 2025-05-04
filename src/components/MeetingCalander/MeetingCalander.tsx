@@ -88,7 +88,7 @@ function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: string[];
   );
 }
 
-export default function DateCalendarServerRequest() {
+export default function Diary() {
   const requestAbortController = React.useRef<AbortController | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [highlightedDays, setHighlightedDays] = React.useState<string[]>([]);
