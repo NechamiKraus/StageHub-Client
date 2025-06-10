@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Theater Management System – Client
 
-Currently, two official plugins are available:
+This is the client-side web application for the Theater Management System, a platform designed to manage shows, practice sessions, and role-based user interactions in a performing arts organization.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔗 This project communicates with the [Server-side API Repository](https://github.com/your-org/theater-server) via HTTP requests. It must be run alongside the backend server.
 
-## Expanding the ESLint configuration
+## 📌 Project Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The client provides a modern and user-friendly interface for both general users and internal roles such as Directors, Coaches, Actors, and Providers.
 
-- Configure the top-level `parserOptions` property like this:
+### 🎟 Home Page (Public)
+- Lists all upcoming shows pulled from the backend (/user/shows)
+- Allows users to order tickets via a form that sends a request to /user/orderticket
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 👤 Personal Area
+Once logged in, users are redirected to a Personal Area tailored to their role:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+#### 🎬 Director
+- ✅ View list of practices
+- ✅ View list of coaches
+- ✅ View list of actors
+- ✅ View list of providers
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+#### 🏋️ Coach
+- ✅ View assigned practices
+- ✅ View subordinate coaches
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+#### 🎭 Actor
+- ✅ View assigned practice
+- ✅ View details about their coach
+
+#### 🚚 Provider
+- ✅ View the information and responsibilities relevant to their services
+
+### 🔐 Authentication
+- Each role logs in via a dedicated endpoint (e.g., /login/director, /login/actor)
+- A JWT token is stored on successful login
+- Token is used for authentication in subsequent API calls
+
+## 🧱 Tech Stack
+- React (with Hooks and Context for state management)
+- React Router for page navigation
+- Fetch / Axios for API communication
+- CSS / Tailwind / Bootstrap for styling
+
+## 🚀 Getting Started
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Configure API base URL**
+   Set your API base URL (e.g., http://localhost:3000) in a config file or .env.
+
+3. **Run the development server**
+   ```bash
+   npm start
+   ```
