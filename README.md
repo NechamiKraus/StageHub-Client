@@ -3,7 +3,7 @@
 
 This is the client-side web application for the Theater Management System, a platform designed to manage shows, practice sessions, and role-based user interactions in a performing arts organization.
 
-🔗 This project communicates with the [Server-side API Repository](https://github.com/your-org/theater-server) via HTTP requests. It must be run alongside the backend server.
+🔗 This project communicates with the [Server-side API Repository](https://github.com/NechamiKraus/StageHub-Server) via HTTP requests. It must be run alongside the backend server.
 
 ## 📌 Project Overview
 
